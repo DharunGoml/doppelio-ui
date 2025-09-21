@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            http-equiv="Content-Security-Policy"
+            content="default-src 'self'; 
+            script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+            style-src 'self'; 
+            img-src 'self'; 
+            connect-src 'self' http://localhost:8005 ws://localhost:8005 http://localhost:8000 ws://localhost:8000 https://hk16pwp3-8005.inc1.devtunnels.ms ws://doppelio-goml-ecs-alb-1845578001.us-west-2.elb.amazonaws.com https://*.s3.amazonaws.com http://doppelio-goml-ecs-alb-1845578001.us-west-2.elb.amazonaws.com:82 http://doppelio-goml-ecs-alb-1845578001.us-west-2.elb.amazonaws.com;
+            media-src 'self' blob:;
+            "
+        />
+        <title>WebSocket Voice Chat Test</title>
+        <link rel="stylesheet" href="./assets/styles.css" />
+    </head>
+    <body>
+        <div class="container" id="container">
+            <h1>Welcome to Chat Assistant</h1>
+            <div class="login-container">
+                <label for="tenantId">Enter Tenant ID</label>
+                <input
+                    type="text"
+                    id="tenantId"
+                    placeholder="Enter your tenant ID..."
+                />
+                <div>
+                    <label for="userId">Enter User ID</label>
+                    <input
+                        type="text"
+                        id="userId"
+                        placeholder="Enter your user ID..."
+                    />
+                    <button id="connectBtn">Connect</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-container" id="main-container">
+            <div class="sidebar">
+                <h3>Conversations</h3>
+                <div class="conversation-list">
+                    <!-- Dynamically render the conversation list -->
+                </div>
+                <button class="newChatButton">+ New Chat</button>
+                <button class="refreshButton">🔄 Refresh</button>
+                <button class="ChangeTenantButton" id="changeTenant">
+                    Change Tenant ID
+                </button>
+                <button id="disconnectBtn">Disconnect</button>
+                <audio id="audioPlayback" controls></audio>
+            </div>
+            
+            <div class="main-content">
+                <h2>New Conversation</h2>
+                <div class="model-select-container">
+                    <label for="modelSelect">Select Model:</label>
+                    <select id="modelSelect">
+                        <option value="" selected>Select the model</option>
+                        <option value="bedrock">Bedrock</option>
+                        <option value="sagemaker">SageMaker</option>
+                    </select>
+                    <div id="sagemakerInputBox" class="sagemaker-inputbox">
+                        <label for="sagemakerEndpointName">Endpoint Name</label>
+                        <input type="text" id="sagemakerEndpointName" placeholder="Enter enpoint name..." class="sagemaker-input">
+                    </div>
+                </div>
+
+                <div class="upload-box" id="dropZone">
+                    <p><strong>Upload Document (PDF, DOCX, or TXT)</strong></p>
+                    <label for="uploadDocument">
+                        📤 Drop File Here<br />or<br /><span class="upload-text"
+                            >Click here to Upload</span
+                        >
+                    </label>
+                    <!-- <input type="file" id="uploadDocument" accept=".pdf,.docx,.txt" style="display: none;"> -->
+                    <input
+                        type="file"
+                        id="uploadDocument"
+                        accept=".pdf,.docx,.txt"
+                    />
+                </div>
+                <div class="upload-status">
+                    <h3>Upload Status</h3>
+                </div>
+                <!-- status indicator -->
+                <div id="status-indicator-new"></div>
+                <div class="chat-section">
+                    <span class="chatbot-label">🗨️ Chatbot</span>
+                    <div id="status-indicator" class="status-message"></div>
+                    <div class="chat-container">
+                        <!-- render the chat bot user response -->
+                    </div>
+                    <div class="btn-section">
+                        <input
+                            type="text"
+                            placeholder="type here..."
+                            id="chatInput"
+                        />
+                        <button class="send-btn">Send</button>
+                        <button id="startRecordBtn" disabled>
+                            Start Recording
+                        </button>
+                        <button id="stopRecordBtn" disabled>
+                            Stop Recording
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./assets/script.js"></script>
+    </body>
+</html>
